@@ -1,0 +1,38 @@
+version: '3'
+services:
+  frontend:
+    image: php:apache
+    container_name: frontend
+    ports:
+      - "8081:80"
+    networks:
+      - app_network
+
+  backend_db:
+    image: mysql:latest
+    container_name: mysq15
+    environment:
+      MYSQL_ROOT_PASSWORD: backendpassword
+      MYSQL_DATABASE: backenddatabase
+    ports:
+      - "8085:3306"
+    volumes:
+      - "C:/Users/Prakhar Srivastava/OneDrive/Desktop/Docker for dev/back-end/myhmsdb.sq1:/docker-entrypoint-initdb.d/myhmsdb.sq1"
+    networks:
+      - app_network
+
+  admin_db:
+    image: mysql:latest
+    container_name: mysq14
+    environment:
+      MYSQL_ROOT_PASSWORD: adminpassword
+      MYSQL_DATABASE: admindatabase
+    ports:
+      - "8087:3306" # Expose a different port for admin database if needed
+    volumes:
+      - "C:/Users\Prakhar Srivastava/OneDrive/Desktop/Docker for dev/admi/hmsdb.sql:/docker-entrypoint-initdb.d/hmsdb.sq1"
+    networks:
+      - app_network
+
+networks:
+  app_network:
